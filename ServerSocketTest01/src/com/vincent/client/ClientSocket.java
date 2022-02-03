@@ -17,7 +17,8 @@ public class ClientSocket {
             //获取该套接字的字节输出流 向服务器写数据 【当发送消息的时候 需要用到流】
             OutputStream outputStream = clientSocket.getOutputStream();
 
-            //在写数据之前 需要用到 标准的数据输出流来包装
+
+            //2. 在写数据之前 需要用到 标准的数据输出流来包装[与DataInputStream配套使用]
             DataOutputStream dos = new DataOutputStream(outputStream);
             dos.writeUTF("你好，服务器，这里是client01号！");
             dos.flush();
