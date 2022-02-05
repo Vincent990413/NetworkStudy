@@ -6,6 +6,8 @@
       <module fileurl="file://$PROJECT_DIR$/ServerSocketTest02/ServerSocketTest02.iml" filepath="$PROJECT_DIR$/ServerSocketTest02/ServerSocketTest02.iml" />
       <module fileurl="file://$PROJECT_DIR$/ServerSocketTest03/ServerSocketTest03.iml" filepath="$PROJECT_DIR$/ServerSocketTest03/ServerSocketTest03.iml" />
       <module fileurl="file://$PROJECT_DIR$/ServerSocketTest04/ServerSocketTest04.iml" filepath="$PROJECT_DIR$/ServerSocketTest04/ServerSocketTest04.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ServerSocketTest05/ServerSocketTest05.iml" filepath="$PROJECT_DIR$/ServerSocketTest05/ServerSocketTest05.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TcpFileUpload/TcpFileUpload.iml" filepath="$PROJECT_DIR$/TcpFileUpload/TcpFileUpload.iml" />
     </modules>
   </component>
 </project>
