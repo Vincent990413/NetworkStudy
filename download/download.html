@@ -1,0 +1,646 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Java8 新特性</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><h1><a id="Java8__0"></a>Java8 新特性</h1>
+<h2><a id="Lambda_1"></a>Lambda表达式</h2>
+<p>a. 格式：[lambda操作符] 或者 [箭头操作符]</p>
+<p>b. 左边 -&gt; <strong>形态列表: 即接口中抽象方法的形参列表</strong></p>
+<p>c. 右边 -&gt; <strong>Lambda体: 重写抽象方法的方法体</strong></p>
+<p>d. (o1, o2) -&gt; Integer.compare(o1, o2);</p>
+<p><mark>在Java中 Lambda表达式的本质：作为接口的实例 而根据对应的形态列表与Lambda 自动去找合适的接口中的方法并重写.</mark></p>
+<pre><code class="prism language-java"><span class="token comment">//1. Lambda表达式，它是一个匿名函数。将其理解为一段可以传递的代码（如同数据一样）</span>
+<span class="token comment">//创建一个匿名实现的对象 【非Lambda】</span>
+<span class="token class-name">Runnable</span> r1 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Runnable</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"r1的任务开始执行..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+r1<span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">//Lambda表达式进行改写</span>
+<span class="token class-name">Runnable</span> r2 <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-&gt;</span> <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"r2的任务开始执行..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+r2<span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<pre><code class="prism language-java"><span class="token comment">//同理不使用Lambda表达式 创建对象</span>
+<span class="token class-name">Comparator</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">&gt;</span></span> com1 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Comparator</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">compare</span><span class="token punctuation">(</span><span class="token class-name">Integer</span> o1<span class="token punctuation">,</span> <span class="token class-name">Integer</span> o2<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token class-name">Integer</span><span class="token punctuation">.</span><span class="token function">compare</span><span class="token punctuation">(</span>o1<span class="token punctuation">,</span> o2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> res1 <span class="token operator">=</span> com1<span class="token punctuation">.</span><span class="token function">compare</span><span class="token punctuation">(</span><span class="token number">12</span><span class="token punctuation">,</span> <span class="token number">13</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">//使用Lambda表达式</span>
+<span class="token class-name">Comparator</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">&gt;</span></span> com2 <span class="token operator">=</span> <span class="token punctuation">(</span>o1<span class="token punctuation">,</span> o2<span class="token punctuation">)</span> <span class="token operator">-&gt;</span> <span class="token class-name">Integer</span><span class="token punctuation">.</span><span class="token function">compare</span><span class="token punctuation">(</span>o1<span class="token punctuation">,</span> o2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> res2 <span class="token operator">=</span> com2<span class="token punctuation">.</span><span class="token function">compare</span><span class="token punctuation">(</span><span class="token number">12</span><span class="token punctuation">,</span> <span class="token number">11</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">//使用方法引用 [类::方法名]</span>
+<span class="token class-name">Comparator</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">&gt;</span></span> com3 <span class="token operator">=</span> <span class="token class-name">Integer</span><span class="token operator">::</span><span class="token function">compare</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> res3 <span class="token operator">=</span> com3<span class="token punctuation">.</span><span class="token function">compare</span><span class="token punctuation">(</span><span class="token number">19</span><span class="token punctuation">,</span> <span class="token number">25</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>res3<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<h3><a id="_48"></a>无参无返回值</h3>
+<pre><code class="prism language-java"><span class="token comment">//1. 无参数，无返回值 比如Runnable的run方法</span>
+<span class="token class-name">Runnable</span> run1 <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-&gt;</span> <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"无参数，无返回值"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+run1<span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<h3><a id="_55"></a>一个参数无返回值</h3>
+<pre><code class="prism language-java"><span class="token comment">//2. 需要一个参数 但是无返回值</span>
+<span class="token class-name">Consumer</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">&gt;</span></span> consumer <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token class-name">String</span> str<span class="token punctuation">)</span> <span class="token operator">-&gt;</span> <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>str<span class="token punctuation">)</span><span class="token punctuation">;</span>
+consumer<span class="token punctuation">.</span><span class="token function">accept</span><span class="token punctuation">(</span><span class="token string">"accept的参数！"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<ul>
+<li>注意：在重写中，**可以使用方法引用来代替Lambda表达式。**比如：System::println 代替 System.out.println();</li>
+</ul>
+<h3><a id="_65"></a>类型推断</h3>
+<blockquote>
+<p>数据类型可以省略，因为可由编译器推断得出，称为类型推断。在泛型那一块，也存在相应的类型推断。</p>
+</blockquote>
+<pre><code class="prism language-java"><span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">&gt;</span></span> list <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<pre><code class="prism language-java"><span class="token class-name">Consumer</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">&gt;</span></span> consumer <span class="token operator">=</span> <span class="token punctuation">(</span>str<span class="token punctuation">)</span> <span class="token operator">-&gt;</span> <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token operator">::</span><span class="token function">println</span><span class="token punctuation">;</span>
+</code></pre>
+<ul>
+<li>注意，当只需要一个参数时。可以去掉形参列表的小括号。</li>
+</ul>
+<h3><a id="__78"></a>两个及以上的参数 可以有返回值</h3>
+<blockquote>
+<p>当Lambda表达式，存在两个及以上的参数，则可以有返回值。</p>
+</blockquote>
+<pre><code class="prism language-java"><span class="token class-name">Comparator</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">&gt;</span></span> com <span class="token operator">=</span> <span class="token punctuation">(</span>o1<span class="token punctuation">,</span> o2<span class="token punctuation">)</span> <span class="token operator">-&gt;</span> <span class="token punctuation">{</span> <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>o1<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token keyword">return</span> <span class="token class-name">Integer</span><span class="token punctuation">.</span><span class="token function">compare</span><span class="token punctuation">(</span>o1<span class="token punctuation">,</span> o2<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token punctuation">}</span>
+</code></pre>
+<ul>
+<li>当只有一条语句，则return关键字与大括号，均可省略。</li>
+</ul>
+<pre><code class="prism language-java"><span class="token class-name">Comparator</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">&gt;</span></span> com <span class="token operator">=</span> <span class="token punctuation">(</span>o1<span class="token punctuation">,</span> o2<span class="token punctuation">)</span> <span class="token operator">-&gt;</span> <span class="token class-name">Integer</span><span class="token punctuation">.</span><span class="token function">compare</span><span class="token punctuation">(</span>o1<span class="token punctuation">,</span> o2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<h3><a id="_Functional_91"></a>函数式接口 Functional</h3>
+<blockquote>
+<p>函数式接口(Functional Interface)就是一个有且仅有一个抽象方法，但是可以有多个非抽象方法的接口。函数式接口可以被隐式转换为 lambda 表达式。Lambda 表达式和方法引用（实际上也可认为是Lambda表达式）上。</p>
+</blockquote>
+<p>在Java中，Lambda表达式是对象，而不是函数，它们必须依附于一类特别的对象类型————函数式接口。即Java不仅仅支持OOP编程，还支持OFP[面向函数]编程。</p>
+<h4><a id="Java_97"></a>Java内置四大函数式接口(重要)</h4>
+<ol>
+<li>
+<p>Consumer: 参数类型为T，返回值为void，用于对类型为T的消费者应用操作，包含方法：<strong>void accepct(T t);</strong></p>
+</li>
+<li>
+<p>Supplier: 无参数类型，返回T类型，用于返回类型为T的生产者对象，包含方法:<strong>T get();</strong></p>
+</li>
+<li>
+<p>Function&lt;T, R&gt;: 参数类型是对类型T的对象应用操作，并返回结果R。包含方法：<strong>R apply(T t);</strong> 注意，当形参为Function或者返回类型为Function时，称为高阶函数。</p>
+</li>
+<li>
+<p>Predicate: 断定类型为T的对象是否满足某约束，并返回对应的boolean值。包含方法：<strong>boolean test(T t);</strong></p>
+</li>
+</ol>
+<p><strong>? 如何定义</strong></p>
+<blockquote>
+<p>增加@FunctionalInterface注解，以及只添加一个抽象方法于这个接口文件中。</p>
+</blockquote>
+<pre><code class="prism language-java"><span class="token comment">/**
+ * Lambda本质就是作为 函数式接口的实例
+ * 只有一个抽象方法的接口 即为声明的函数式接口
+ */</span>
+<span class="token annotation punctuation">@FunctionalInterface</span>
+<span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">GreetInterface</span> <span class="token punctuation">{</span>
+    <span class="token keyword">void</span> <span class="token function">greet</span><span class="token punctuation">(</span><span class="token class-name">String</span> name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h4><a id="Lambda_121"></a>利用Lambda表达式来重写并调用</h4>
+<pre><code class="prism language-java"><span class="token class-name">GreetInterface</span> greetInterface <span class="token operator">=</span> <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token operator">::</span><span class="token function">println</span><span class="token punctuation">;</span>
+greetInterface<span class="token punctuation">.</span><span class="token function">greet</span><span class="token punctuation">(</span><span class="token string">"Vincent"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<h2><a id="_127"></a>方法引用</h2>
+<blockquote>
+<p><strong>当要传递给Lambda体的操作，已经有实现的方法时，可以使用方法引用。</strong> 可以将其看做就是Lambda表达式，它的作用就是通过方法的名字来指向一个方法。</p>
+</blockquote>
+<p>要求：<strong>函数式接口中的抽象方法的参数列表和返回值类型，必须与方法引用的方法参数列表和返回值类型保持一致。泛型T 可以看做是任何类型。</strong></p>
+<p>什么意思？举个例子，现在我们使用Java自带的内置函数式接口：<code>Consumer&lt;T&gt;</code>中的<code>void accept(T t);</code>抽象方法以及我们定义实现接口中的<code>PrintStream</code>中的<code>void println(T t);</code>方法。</p>
+<ol>
+<li>第一种形式：</li>
+</ol>
+<pre><code class="prism language-java"><span class="token class-name">Consumer</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">&gt;</span></span> consumer <span class="token operator">=</span> <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token operator">::</span><span class="token function">println</span><span class="token punctuation">;</span>
+consumer<span class="token punctuation">.</span><span class="token function">accept</span><span class="token punctuation">(</span><span class="token string">"Vincent"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<ol start="2">
+<li>第二种形式:</li>
+</ol>
+<pre><code class="prism language-java"><span class="token class-name">PrintStream</span> ps <span class="token operator">=</span> <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">;</span>
+<span class="token class-name">Consumer</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">&gt;</span></span> con <span class="token operator">=</span>  ps<span class="token operator">::</span><span class="token function">println</span><span class="token punctuation">;</span>
+con<span class="token punctuation">.</span><span class="token function">accept</span><span class="token punctuation">(</span><span class="token string">"Vincent"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>又或者，Supplier 接口中的<code>T get()</code>方法与我们自己的某一个实体类的<code>Student getName()</code>方法，他们的参数类型与返回值均一致，也可使用方法引用。</p>
+<pre><code class="prism language-java"><span class="token class-name">Student</span> student <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Student</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+student<span class="token punctuation">.</span><span class="token function">setName</span><span class="token punctuation">(</span><span class="token string">"Vincent"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token class-name">Supplier</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">&gt;</span></span> nameSupplier <span class="token operator">=</span> student<span class="token operator">::</span><span class="token function">getName</span><span class="token punctuation">;</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>nameSupplier<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>可以看到，student对象中的String getName()方法与Supplier接口中的 T get()方法参数类型与返回值均一致。</p>
+<p>有以下三种类型：</p>
+<ul>
+<li>
+<p>对象::实例方法名</p>
+</li>
+<li>
+<p>类名::静态方法名</p>
+</li>
+<li>
+<p>类名::非静态方法名</p>
+</li>
+</ul>
+<pre><code class="prism language-java"><span class="token comment">//比如对数字进行 四舍五入 </span>
+<span class="token class-name">Function</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Double</span><span class="token punctuation">,</span> <span class="token class-name">Long</span><span class="token punctuation">&gt;</span></span> fun <span class="token operator">=</span> <span class="token class-name">Math</span><span class="token operator">::</span><span class="token function">round</span><span class="token punctuation">;</span>
+</code></pre>
+<p>如果接口中的参数与使用时参数不一致时，则不适用于情况一与情况二。<strong>【难理解】</strong></p>
+<p><strong>比如：<br>
+Comparator类中的int compare(T t1, T t2);  ①<br>
+与<br>
+String类中的int t1.compareTo(String t2);</strong> ②</p>
+<pre><code class="prism language-java"><span class="token comment">//重写Comparator接口</span>
+<span class="token class-name">Comparator</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">&gt;</span></span> com <span class="token operator">=</span> <span class="token punctuation">(</span>s1<span class="token punctuation">,</span> s2<span class="token punctuation">)</span> <span class="token operator">-&gt;</span> s1<span class="token punctuation">.</span><span class="token function">compareTo</span><span class="token punctuation">(</span>s2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>com<span class="token punctuation">.</span><span class="token function">compare</span><span class="token punctuation">(</span><span class="token string">"abc"</span><span class="token punctuation">,</span> <span class="token string">"cde"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">//①中的t1是作为②的方法的调用者，因而可以使用方法引用，并且是：【类::方法名】</span>
+<span class="token class-name">Comparator</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">&gt;</span></span> com1 <span class="token operator">=</span> <span class="token class-name">String</span><span class="token operator">::</span><span class="token function">compareTo</span><span class="token punctuation">;</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>com1<span class="token punctuation">.</span><span class="token function">compare</span><span class="token punctuation">(</span><span class="token string">"abc"</span><span class="token punctuation">,</span> <span class="token string">"abm"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<h2><a id="_188"></a>构造器引用</h2>
+<blockquote>
+<p>与方法引用类似，构造器引用也是看方法匹配情况。</p>
+</blockquote>
+<p>比如Student类中的空构造方法: Student(); 以及Supplier接口中的 T get()方法。</p>
+<p>可以看到，这两个方法的返回类型与方法参数都是匹配的。因而，可以使用构造器函数。</p>
+<pre><code class="prism language-java"><span class="token class-name">Supplier</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Student</span><span class="token punctuation">&gt;</span></span> supplier <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-&gt;</span> <span class="token keyword">new</span> <span class="token class-name">Student</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">System</span><span class="token punctuation">,</span>out<span class="token punctuation">,</span><span class="token function">println</span><span class="token punctuation">(</span>supplier<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>使用构造器引用后，则代码如下：</p>
+<pre><code class="prism language-java"><span class="token class-name">Supplier</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Student</span><span class="token punctuation">&gt;</span></span> supplier <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-&gt;</span> <span class="token class-name">Student</span><span class="token operator">::</span><span class="token keyword">new</span><span class="token punctuation">;</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>supplier<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<ul>
+<li>以上，是空构造器引用的情况。若有多个参数，则仍然适用，仍写成<code>Student:new</code>，会自动根据调用时传入的参数，则找相应的构造器。</li>
+</ul>
+<h2><a id="_208"></a>数组引用</h2>
+<blockquote>
+<p>我们将数组看成是一个类，则适用于同样的情况。</p>
+</blockquote>
+<pre><code class="prism language-java"><span class="token class-name">Function</span><span class="token operator">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">,</span> <span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> func <span class="token operator">=</span> length <span class="token operator">-&gt;</span> <span class="token keyword">new</span> <span class="token class-name">String</span><span class="token punctuation">[</span>length<span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> apply <span class="token operator">=</span> func<span class="token punctuation">.</span><span class="token function">apply</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token class-name">Arrays</span><span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span>apply<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token class-name">Function</span><span class="token operator">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">,</span> <span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> func1 <span class="token operator">=</span> <span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token operator">::</span><span class="token keyword">new</span><span class="token punctuation">;</span>
+<span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> apply1 <span class="token operator">=</span> func1<span class="token punctuation">.</span><span class="token function">apply</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token class-name">Arrays</span><span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span>apply1<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<h2><a id="StreamAPI__221"></a>StreamAPI 概述</h2>
+<blockquote>
+<p>Stream 是Java8中处理集合的关键抽象概念，可以指定自己希望对集合进行的操作。可以执行非常复杂的查找、过滤和映射数据等操作。<strong>使用StreamAPI对集合进行操作，就类似于适用SQL执行的数据库查询过程</strong>。</p>
+</blockquote>
+<ul>
+<li>Collection 集合与 Stream 的区别？<strong>Collection是一种面向存储的静态内存数据结构，而Stream 是面向CPU计算的，要通过CPU来实现计算。</strong></li>
+</ul>
+<ol>
+<li>Stream 自己不会存储元素</li>
+<li>Stream 不会改变原对象。他们会返回一个持有结果的新Stream</li>
+<li>Stream操作是延迟执行的，这意味着他们会等到需要结果的时候才执行。</li>
+</ol>
+<p>分为三个步骤：</p>
+<ol>
+<li>
+<p>创建Stream对象</p>
+</li>
+<li>
+<p>创建中间步骤，即若干个流水线，计算链。可以(比如过滤、映射等)</p>
+</li>
+<li>
+<p>创建终止步骤. <strong>一旦执行终止操作，就执行中间步骤，并产生结果。产生结果后，将不会再执行，除非重新创建Stream对象。</strong></p>
+</li>
+</ol>
+<h2><a id="_238"></a>例子引入：内部迭代与外部迭代</h2>
+<blockquote>
+<p>其实，在没有引用Stream之前，我们是使用外部迭代来操作集合中的数据。代码如下：</p>
+</blockquote>
+<p><code>[ 比如 ]</code> 现在需要统计学生列表中，成年(年龄大于等于18岁)的个数。</p>
+<p>我们可能会使用这两种方法。</p>
+<pre><code class="prism language-java"><span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Student</span><span class="token punctuation">&gt;</span></span> list <span class="token operator">=</span> <span class="token class-name">StudentData</span><span class="token punctuation">.</span><span class="token function">getList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">long</span> count <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token class-name">Student</span> student <span class="token operator">:</span> list<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>student<span class="token punctuation">.</span><span class="token function">getAge</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&gt;=</span> <span class="token number">18</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        count<span class="token operator">++</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>count<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<pre><code class="prism language-java"><span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Student</span><span class="token punctuation">&gt;</span></span> list <span class="token operator">=</span> <span class="token class-name">StudentData</span><span class="token punctuation">.</span><span class="token function">getList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">long</span> count <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token class-name">Iterator</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Student</span><span class="token punctuation">&gt;</span></span> iterator <span class="token operator">=</span> list<span class="token punctuation">.</span><span class="token function">iterator</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">while</span> <span class="token punctuation">(</span>iterator<span class="token punctuation">.</span><span class="token function">hasNext</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token class-name">Student</span> next <span class="token operator">=</span> iterator<span class="token punctuation">.</span><span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>next<span class="token punctuation">.</span><span class="token function">getAge</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&gt;=</span> <span class="token number">18</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        count<span class="token operator">++</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>count<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<ul>
+<li>而后者则称为外部迭代，从集合外部进行迭代。</li>
+</ul>
+<p><strong>什么是内部迭代呢？就是利用Stream来迭代并对集合进行操作。</strong></p>
+<h3><a id="__273"></a>创建方式 如何内部迭代？</h3>
+<h3><a id="1__liststream_274"></a>1. 通过集合对象的默认方法 list.stream()</h3>
+<p>比如这里有一个Integer类型的List，其顺序分别为：1, 2, 3, 4, 5.</p>
+<h4><a id="_277"></a>非并行流</h4>
+<blockquote>
+<p><strong>非并行流下处理过程中的数据，与其本身的相对顺序一致。</strong></p>
+</blockquote>
+<pre><code class="prism language-java"><span class="token comment">//首先拿到一个集合</span>
+<span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">&gt;</span></span> list <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+list<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+list<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+list<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">//接下来实例化一个Stream [默认是非并行的流]</span>
+<span class="token class-name">Stream</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">&gt;</span></span> stream <span class="token operator">=</span> list<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+</code></pre>
+<h4><a id="_291"></a>并行流</h4>
+<blockquote>
+<p>顺序不一定一致。</p>
+</blockquote>
+<pre><code class="prism language-java"><span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">&gt;</span></span> list <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+list<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+list<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+list<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">//接下来实例化一个Stream [默认是非并行的流]</span>
+<span class="token class-name">Stream</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">&gt;</span></span> stream <span class="token operator">=</span> list<span class="token punctuation">.</span><span class="token function">parallelStream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<h3><a id="2__304"></a>2. 通过数组的静态方法</h3>
+<pre><code class="prism language-java"><span class="token comment">//创建int数组类型的流</span>
+<span class="token keyword">int</span> arr<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token class-name">IntStream</span> stream <span class="token operator">=</span> <span class="token class-name">Arrays</span><span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span>arr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+
+<span class="token comment">//创建自定义类型的流</span>
+<span class="token class-name">Student</span> s1 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Student</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">Student</span> s2 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Student</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">Student</span> stud<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Student</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">{</span>s1<span class="token punctuation">,</span> s2<span class="token punctuation">}</span><span class="token punctuation">;</span> 
+<span class="token class-name">Arrays</span><span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span>stud<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<h3><a id="3_Streamof_318"></a>3. 通过Stream类的静态方法of</h3>
+<p><img src="https://img-blog.csdnimg.cn/5ce513ad4c94493b8640b416c7cd146b.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5L2g57uI56GV55qEVmluY2VudA==,size_20,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述"></p>
+<pre><code class="prism language-java"><span class="token class-name">Stream</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">&gt;</span></span> integerStream <span class="token operator">=</span> <span class="token class-name">Stream</span><span class="token punctuation">.</span><span class="token function">of</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<h3><a id="__324"></a>创建无限流 [了解即可]</h3>
+<p><strong>Stream类中的静态iterate方法与generate方法。</strong></p>
+<h3><a id="_328"></a>中间操作链</h3>
+<p>首先，我们准备以下若干个自定义类Student的数据，其中有name与age两个属性。</p>
+<pre><code class="prism language-java"><span class="token class-name">Student</span> s1 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Student</span><span class="token punctuation">(</span><span class="token string">"Jerry"</span><span class="token punctuation">,</span> <span class="token number">17</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">Student</span> s2 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Student</span><span class="token punctuation">(</span><span class="token string">"Vincent"</span><span class="token punctuation">,</span> <span class="token number">25</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">Student</span> s3 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Student</span><span class="token punctuation">(</span><span class="token string">"Tom"</span><span class="token punctuation">,</span> <span class="token number">37</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">Student</span> s4 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Student</span><span class="token punctuation">(</span><span class="token string">"Joe"</span><span class="token punctuation">,</span> <span class="token number">40</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">Student</span> s5 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Student</span><span class="token punctuation">(</span><span class="token string">"Wade"</span><span class="token punctuation">,</span> <span class="token number">60</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<h3><a id="_339"></a>筛选与切片</h3>
+<blockquote>
+<p>注意，在具体使用时。没有终止操作，是没办法看到是否有效果的。称之为 <em>惰性求值方法</em> ) 我们可以使用<code>forEach()</code>来对每个元素进行某种操作。<mark>并且，一旦执行了终止操作 [譬如forEach]。没办法在不创建新的stream()的情况下，继续做中间操作。</mark></p>
+</blockquote>
+<ul>
+<li>filter 过滤操作，能够根据给定的Predicate布尔返回值，来返回满足这个布尔条件的数据集。</li>
+</ul>
+<pre><code class="prism language-java"><span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Student</span><span class="token punctuation">&gt;</span></span> list <span class="token operator">=</span> <span class="token class-name">StudentData</span><span class="token punctuation">.</span><span class="token function">getList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">Stream</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Student</span><span class="token punctuation">&gt;</span></span> stream <span class="token operator">=</span> list<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+stream<span class="token punctuation">.</span><span class="token function">filter</span><span class="token punctuation">(</span>e <span class="token operator">-&gt;</span> e<span class="token punctuation">.</span><span class="token function">getAge</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&gt;</span> <span class="token number">18</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token operator">::</span><span class="token function">println</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<ul>
+<li>limit(n) 截断 / 限制：截断流，<strong>使其元素不超过给定数量</strong>。</li>
+</ul>
+<pre><code class="prism language-java"> <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Student</span><span class="token punctuation">&gt;</span></span> list <span class="token operator">=</span> <span class="token class-name">StudentData</span><span class="token punctuation">.</span><span class="token function">getList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ <span class="token class-name">Stream</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Student</span><span class="token punctuation">&gt;</span></span> stream <span class="token operator">=</span> list<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ stream<span class="token punctuation">.</span><span class="token function">limit</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token operator">::</span><span class="token function">println</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<ul>
+<li>skip(n) 跳过操作，<strong>跳过前n个元素的操作。若元素长度不足n，则返回一个空流。</strong></li>
+</ul>
+<pre><code class="prism language-java"><span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Student</span><span class="token punctuation">&gt;</span></span> list <span class="token operator">=</span> <span class="token class-name">StudentData</span><span class="token punctuation">.</span><span class="token function">getList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">Stream</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Student</span><span class="token punctuation">&gt;</span></span> stream <span class="token operator">=</span> list<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+stream<span class="token punctuation">.</span><span class="token function">skip</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token operator">::</span><span class="token function">println</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<ul>
+<li><strong>distinct 筛选操作, 通过流生成元素的hashCode()与equals()去除重复元素。</strong></li>
+</ul>
+<h3><a id="_366"></a>映射</h3>
+<blockquote>
+<p>map 映射操作，接收一个函数作为一个参数。<strong>可以对集合中的每一个元素进行任何自定义的操作。比如让所有小写字母变成大写的等等。</strong></p>
+</blockquote>
+<p>也即是说，map操作，可以将流中的值转换为新的流。单单使用map方法，则停止了，会返回相同泛型类型的Stream类型。</p>
+<p>😃 现在做一个小练习，将集合中的字母都变成大写的。即对集合中的每一个元素都处理。</p>
+<pre><code class="prism language-java"><span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">&gt;</span></span> strings <span class="token operator">=</span> <span class="token class-name">Arrays</span><span class="token punctuation">.</span><span class="token function">asList</span><span class="token punctuation">(</span><span class="token string">"hello"</span><span class="token punctuation">,</span> <span class="token string">"this is"</span><span class="token punctuation">,</span> <span class="token string">"a new"</span><span class="token punctuation">,</span> <span class="token string">"world"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+strings<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token operator">::</span><span class="token function">toUpperCase</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token operator">::</span><span class="token function">println</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<ul>
+<li>注意，这里也使用到了方法引用。因为map接口中的参数与String的toUpperCase函数方法参数一致。</li>
+</ul>
+<p><code>[ 举例 ]:</code> 根据上述提供的Student集合，查询年龄大于18岁的所有年龄信息。注意，只查询年龄信息说明要map，大于18岁说明要filter过滤。</p>
+<pre><code class="prism language-java"><span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Student</span><span class="token punctuation">&gt;</span></span> list <span class="token operator">=</span> <span class="token class-name">StudentData</span><span class="token punctuation">.</span><span class="token function">getList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+list<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token class-name">Student</span><span class="token operator">::</span><span class="token function">getAge</span><span class="token punctuation">)</span>
+<span class="token punctuation">.</span><span class="token function">filter</span><span class="token punctuation">(</span>e <span class="token operator">-&gt;</span> e <span class="token operator">&gt;</span> <span class="token number">18</span><span class="token punctuation">)</span>
+<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token operator">::</span><span class="token function">println</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<blockquote>
+<p>flatMap 接收一个函数作为参数，将流中的每个值都换成另一个流，同时将所有流都结合成一个流。</p>
+</blockquote>
+<ul>
+<li><strong>类比集合的add方法与addAll方法：如果集合A有三个元素{a, b, c}，而集合B有三个元素{d, e, f}：</strong></li>
+</ul>
+<ol>
+<li>如果<strong>使用A.add(B)</strong>; 那么集合A的形式如下：</li>
+</ol>
+<pre><code class="prism language-java"><span class="token punctuation">[</span>a<span class="token punctuation">,</span> b<span class="token punctuation">,</span> c<span class="token punctuation">,</span> <span class="token punctuation">[</span>d<span class="token punctuation">,</span> e<span class="token punctuation">,</span> f<span class="token punctuation">]</span><span class="token punctuation">]</span>
+</code></pre>
+<p><strong>即有四个元素。</strong></p>
+<ol start="2">
+<li>而如果是<strong>addAll方法</strong>：</li>
+</ol>
+<pre><code class="prism language-java"><span class="token punctuation">[</span>a<span class="token punctuation">,</span> b<span class="token punctuation">,</span> c<span class="token punctuation">,</span> d<span class="token punctuation">,</span> e<span class="token punctuation">,</span> f<span class="token punctuation">]</span>
+</code></pre>
+<p>则<strong>集合A中有6个元素</strong>。</p>
+<p><strong>现在使用flatMap，则相当于<code>addAll</code>的思想，会将所有的流程经过处理后，视为一个流。</strong></p>
+<pre><code class="prism language-java"><span class="token comment">/**
+ * 将一个单独的字符串转换为一个Stream
+ *
+ * @param string
+ * @return
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token class-name">Stream</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Character</span><span class="token punctuation">&gt;</span></span> <span class="token function">fromStringToStream</span><span class="token punctuation">(</span><span class="token class-name">String</span> string<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Character</span><span class="token punctuation">&gt;</span></span> list <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token class-name">Character</span> character <span class="token operator">:</span> string<span class="token punctuation">.</span><span class="token function">toCharArray</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        list<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>character<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> list<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<pre><code class="prism language-java"><span class="token comment">//将若干个字符串转换为List集合</span>
+<span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">&gt;</span></span> strings <span class="token operator">=</span> <span class="token class-name">Arrays</span><span class="token punctuation">.</span><span class="token function">asList</span><span class="token punctuation">(</span><span class="token string">"hello"</span><span class="token punctuation">,</span> <span class="token string">"my"</span><span class="token punctuation">,</span> <span class="token string">"hello"</span><span class="token punctuation">,</span> <span class="token string">"world"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">//注意每一个字符串 都是一个单独的流</span>
+strings<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">flatMap</span><span class="token punctuation">(</span><span class="token class-name">Main</span><span class="token operator">::</span><span class="token function">fromStringToStream</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token operator">::</span><span class="token function">println</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>可以看到，<code>hello</code>是一个流，<code>my</code>也是一个流。</p>
+<p>如果要使用<code>map()</code>的话，就必须要在此基础上，使用两次forEach，第一次是获取到比如hello这个流，第二次是对于’h’, ‘e’, 'l’这样去获得元素。</p>
+<p><strong>而如果使用<code>flatMap</code>的话，则不用担心每个字符串都是一个流，会变成一整个流，对每个字母进行操作即可。</strong></p>
+<h3><a id="_436"></a>排序</h3>
+<blockquote>
+<p>关于排序，根据排序方式的不同，分为sorted() [按自然顺序排序] 与sorted(Comparator com) [按照比较器顺序排序]。</p>
+</blockquote>
+<h4><a id="_440"></a>使用自然顺序排序</h4>
+<pre><code class="prism language-java">        <span class="token comment">//将若干个数字转换为List集合</span>
+<span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">&gt;</span></span> arr <span class="token operator">=</span> <span class="token class-name">Arrays</span><span class="token punctuation">.</span><span class="token function">asList</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">54</span><span class="token punctuation">,</span> <span class="token number">23</span><span class="token punctuation">,</span> <span class="token number">36</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">//若不含比较器参数 则按照List中的自然顺序进行比较</span>
+arr<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">sorted</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token operator">::</span><span class="token function">println</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p><img src="https://img-blog.csdnimg.cn/c554f61b00f84acca2a2d44003ee9aad.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5L2g57uI56GV55qEVmluY2VudA==,size_20,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述"></p>
+<h4><a id="_448"></a>根据比较器排序[适用于自定义类型的自定义排序方式]</h4>
+<blockquote>
+<p>例如，根据age的年龄从小到大对上述的Student集合进行排序。</p>
+</blockquote>
+<ul>
+<li>注意，如果要对自定义的类型Student使用排序，需要实现Comparable接口。</li>
+</ul>
+<pre><code class="prism language-java"><span class="token comment">//对自定义类型集合 按照默认compare方法进行排序</span>
+<span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Student</span><span class="token punctuation">&gt;</span></span> list <span class="token operator">=</span> <span class="token class-name">StudentData</span><span class="token punctuation">.</span><span class="token function">getList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">//根据Comparator的静态工厂方法 来实例化sorted需要的参数</span>
+list<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">sorted</span><span class="token punctuation">(</span><span class="token class-name">Comparator</span><span class="token punctuation">.</span><span class="token function">comparingInt</span><span class="token punctuation">(</span><span class="token class-name">Student</span><span class="token operator">::</span><span class="token function">getAge</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token operator">::</span><span class="token function">println</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p><img src="https://img-blog.csdnimg.cn/386a6a13a3394ffa97fe6655f8a6fe03.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5L2g57uI56GV55qEVmluY2VudA==,size_20,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述"></p>
+<h3><a id="_461"></a>终止操作连</h3>
+<blockquote>
+<p>在上文中的forEach操作，其实就是终止操作链中所定义的其中一个方法。其余的方法如下：（图来自尚硅谷）</p>
+</blockquote>
+<p><img src="https://img-blog.csdnimg.cn/56c304ab62f540b5a72d4e778e93e900.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5L2g57uI56GV55qEVmluY2VudA==,size_17,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述"></p>
+<p>count: 返回流中元素的个数。</p>
+<p>max / min(Comparator c): 返回流中最大、小值。</p>
+<p>forEach(Consumer c): 内部迭代，并进行一些操作。</p>
+<h4><a id="_472"></a>匹配与查找</h4>
+<ol>
+<li>使用allMatch判断，是否所有Student的年龄都大于18岁？</li>
+</ol>
+<pre><code class="prism language-java"><span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Student</span><span class="token punctuation">&gt;</span></span> list <span class="token operator">=</span> <span class="token class-name">StudentData</span><span class="token punctuation">.</span><span class="token function">getList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">boolean</span> ageFlag <span class="token operator">=</span> list<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">allMatch</span><span class="token punctuation">(</span>e <span class="token operator">-&gt;</span> e<span class="token punctuation">.</span><span class="token function">getAge</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&gt;</span> <span class="token number">18</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>ageFlag<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<ul>
+<li>anyMatch[至少一个存在即可]与noneMatch[是否都不满足]用法与allMatch一致。</li>
+</ul>
+<ol start="2">
+<li>使用findFirst返回第一个元素，注意这里的Optional类。</li>
+</ol>
+<pre><code class="prism language-java"><span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Student</span><span class="token punctuation">&gt;</span></span> list <span class="token operator">=</span> <span class="token class-name">StudentData</span><span class="token punctuation">.</span><span class="token function">getList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">Optional</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Student</span><span class="token punctuation">&gt;</span></span> first <span class="token operator">=</span> list<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">findFirst</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>first<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p><img src="https://img-blog.csdnimg.cn/dc2ec533bedf43bba54038ed3f755d24.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5L2g57uI56GV55qEVmluY2VudA==,size_20,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述"></p>
+<ul>
+<li>当然，可以在执行findFirst（及其他终止操作）之前，执行若干个中间操作。</li>
+</ul>
+<ol start="3">
+<li>使用count来统计流中的元素个数，返回long型。</li>
+</ol>
+<pre><code class="prism language-java"><span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Student</span><span class="token punctuation">&gt;</span></span> list <span class="token operator">=</span> <span class="token class-name">StudentData</span><span class="token punctuation">.</span><span class="token function">getList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">long</span> count <span class="token operator">=</span> list<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">count</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>count<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<ol start="4">
+<li>使用max来返回最高年龄</li>
+</ol>
+<pre><code class="prism language-java"><span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Student</span><span class="token punctuation">&gt;</span></span> list <span class="token operator">=</span> <span class="token class-name">StudentData</span><span class="token punctuation">.</span><span class="token function">getList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">//这里思路比较简单 首先map提取出由age组成的stream</span>
+<span class="token comment">//然后使用max 根据Integer比较 从小到大</span>
+<span class="token class-name">Optional</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">&gt;</span></span> max <span class="token operator">=</span> list
+        <span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token class-name">Student</span><span class="token operator">::</span><span class="token function">getAge</span><span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">max</span><span class="token punctuation">(</span><span class="token class-name">Integer</span><span class="token operator">::</span><span class="token function">compare</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>max<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<h4><a id="_509"></a>归约</h4>
+<p>所谓归约，就是将刚刚遇到的问题，约简（Reduce）为某个已解决的问题。</p>
+<blockquote>
+<p>一个物理学家和一个数学家正坐在教师休息室里。突然间，休息室里的咖啡机着火了。**物理学家就拿了一个垃圾桶，把里面的垃圾清空，跑到水池前，给垃圾桶灌满水，随后扑灭了火。**由于这个咖啡机着过一次火了，大家都同意把垃圾桶装满水放在这个咖啡机旁边。<br>
+第二天，同样的两个人又坐在同样的休息室里，咖啡机又一次着火了。这一次，**数学家站了起来，把装满水的垃圾桶拿了起来，把里面的水倒掉，又放了一些垃圾在里面，交给了物理学家。**这样就把问题归约到了一个之前已经解决过的问题上。</p>
+</blockquote>
+<ol>
+<li>通过reduce来计算1-10的自然数的和。</li>
+</ol>
+<pre><code class="prism language-java"><span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">&gt;</span></span> integers <span class="token operator">=</span> <span class="token class-name">Arrays</span><span class="token punctuation">.</span><span class="token function">asList</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">9</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">Integer</span> reduce <span class="token operator">=</span> integers<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">reduce</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token class-name">Integer</span><span class="token operator">::</span><span class="token function">sum</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>reduce<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<ul>
+<li>
+<p>使用已给的参数一：identity值 以及参数二：每一次的函数sum将两个数字求和</p>
+</li>
+<li>
+<p>通过reduce归约 总归为求已知的sum函数值 将每次遇到的新问题 归约为旧问题</p>
+</li>
+</ul>
+<ol start="2">
+<li>通过reduce来计算，所有学生的年龄总和。</li>
+</ol>
+<ul>
+<li>注意，这里可以这么处理：使用map映射，让所有学生的年龄集合作为流的集合，而不是所有学生作为流的集合。<code>Stream&lt;Integer&gt;</code></li>
+</ul>
+<pre><code class="prism language-java"><span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Student</span><span class="token punctuation">&gt;</span></span> list <span class="token operator">=</span> <span class="token class-name">StudentData</span><span class="token punctuation">.</span><span class="token function">getList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">//通过map映射 让所有学生的年龄作为流的元素</span>
+<span class="token class-name">Stream</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">&gt;</span></span> integerStream <span class="token operator">=</span> list<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token class-name">Student</span><span class="token operator">::</span><span class="token function">getAge</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">//对每个元素进行归约求和操作</span>
+<span class="token class-name">Optional</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">&gt;</span></span> reduce <span class="token operator">=</span> integerStream<span class="token punctuation">.</span><span class="token function">reduce</span><span class="token punctuation">(</span><span class="token class-name">Integer</span><span class="token operator">::</span><span class="token function">sum</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>reduce<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<h4><a id="_539"></a>收集</h4>
+<blockquote>
+<p>在某些场景，<mark>我们可能需要将Stream中的元素作汇总、比如收集到一个List、Set或者Map中。</mark></p>
+</blockquote>
+<p>譬如，可以将上述学生集合中的年龄，收集到一个List中。</p>
+<pre><code class="prism language-java"><span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Student</span><span class="token punctuation">&gt;</span></span> list <span class="token operator">=</span> <span class="token class-name">StudentData</span><span class="token punctuation">.</span><span class="token function">getList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token class-name">Stream</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">&gt;</span></span> integerStream <span class="token operator">=</span> list<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token class-name">Student</span><span class="token operator">::</span><span class="token function">getAge</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">//通过Collectors.toList()将这个流中的所有元素 存储到List中</span>
+<span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">&gt;</span></span> collect <span class="token operator">=</span> integerStream<span class="token punctuation">.</span><span class="token function">collect</span><span class="token punctuation">(</span><span class="token class-name">Collectors</span><span class="token punctuation">.</span><span class="token function">toList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>collect<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p><img src="https://img-blog.csdnimg.cn/cdcead0990fd49a090bc27850bc82dea.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5L2g57uI56GV55qEVmluY2VudA==,size_20,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述"></p>
+<ul>
+<li>注意，<strong>同样可以使用，Collectors.toSet()以及Collectors.toMap()来转换为无序无重复集合以及Map键值对映射。</strong></li>
+</ul>
+<h2><a id="Optional__558"></a>Optional 类</h2>
+<blockquote>
+<p>Java中的空指针异常，往往是因为数据审核条件不明确，不足够导致。因而，出现了Optional类，来防止空指针异常。</p>
+</blockquote>
+<p><code>Optional&lt;T&gt;</code>类是一个容器类，可以保存类型T的值，代表这个值存在。或者仅仅保存Null，表示这个值不存在。原来用null表示一个值不存在，现在Optional可以更好地表达这个概念，而且可以避免空指针异常。</p>
+<ul>
+<li>Javadoc描述如下，这是一个可以为null的容器对象。如果值存在则<code>isPresent()</code>方法会返回True，调用<code>get()</code>会返回该对象。</li>
+</ul>
+<h3><a id="Optional_566"></a>创建Optional对象</h3>
+<ol>
+<li>
+<p>Optional.empty(): 创建一个Optional空实例。</p>
+</li>
+<li>
+<p>Optional.of(T t): 创建一个非空的Optional实例。<strong>规定实例必须非空，若不为空则报异常。</strong></p>
+</li>
+</ol>
+<pre><code class="prism language-java"><span class="token class-name">Student</span> student <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Student</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">Optional</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Student</span><span class="token punctuation">&gt;</span></span> optional <span class="token operator">=</span> <span class="token class-name">Optional</span><span class="token punctuation">.</span><span class="token function">of</span><span class="token punctuation">(</span>student<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>optional<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p><img src="https://img-blog.csdnimg.cn/1e1fec4579e64d70888c8c34c10159b7.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5L2g57uI56GV55qEVmluY2VudA==,size_20,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述"><br>
+<img src="https://img-blog.csdnimg.cn/1edb1c28aeec4d80919f169c0a0349f1.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5L2g57uI56GV55qEVmluY2VudA==,size_20,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述"></p>
+<ol start="3">
+<li>Optional.ofNullable(T t): 创建一个可以为空的Optional实例。</li>
+</ol>
+<h3><a id="_580"></a>判断是否有对象</h3>
+<ol>
+<li><strong>boolean isPresent(); 单独判断是否存在对象，即是否为非空。</strong></li>
+</ol>
+<pre><code class="prism language-java"><span class="token class-name">Student</span> student <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Student</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+student<span class="token punctuation">.</span><span class="token function">setName</span><span class="token punctuation">(</span><span class="token string">"Vincent"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+student<span class="token punctuation">.</span><span class="token function">setAge</span><span class="token punctuation">(</span><span class="token number">18</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token class-name">Optional</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Student</span><span class="token punctuation">&gt;</span></span> optional <span class="token operator">=</span> <span class="token class-name">Optional</span><span class="token punctuation">.</span><span class="token function">ofNullable</span><span class="token punctuation">(</span>student<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"该Optional对象是否不为空："</span> <span class="token operator">+</span> optional<span class="token punctuation">.</span><span class="token function">isPresent</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+student <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+optional <span class="token operator">=</span> <span class="token class-name">Optional</span><span class="token punctuation">.</span><span class="token function">ofNullable</span><span class="token punctuation">(</span>student<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"该Optional对象是否不为空："</span> <span class="token operator">+</span> optional<span class="token punctuation">.</span><span class="token function">isPresent</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p><img src="https://img-blog.csdnimg.cn/1544d26b5f96426597ca815942415086.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5L2g57uI56GV55qEVmluY2VudA==,size_20,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述"></p>
+<ol start="2">
+<li><strong>判断的同时，如果存在对象，则执行接口Consumer中的代码。</strong></li>
+</ol>
+<ul>
+<li>现有Teacher与Student对象，将Student依赖注入到Teacher对象中。在void teach()方法中，我们判断授课行为的student对象是否为空？若不为空，提示可以授课。</li>
+</ul>
+<pre><code class="prism language-java"><span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">teach</span><span class="token punctuation">(</span><span class="token class-name">Student</span> student<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token class-name">Optional</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Student</span><span class="token punctuation">&gt;</span></span> optionalStudent <span class="token operator">=</span> <span class="token class-name">Optional</span><span class="token punctuation">.</span><span class="token function">ofNullable</span><span class="token punctuation">(</span>student<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    optionalStudent<span class="token punctuation">.</span><span class="token function">ifPresent</span><span class="token punctuation">(</span>student1 <span class="token operator">-&gt;</span> <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"该student对象不为空，可以授课！"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+  
+<span class="token class-name">Student</span> student <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Student</span><span class="token punctuation">(</span><span class="token string">"vincent"</span><span class="token punctuation">,</span> <span class="token number">18</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">Teacher</span> teacher <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Teacher</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+teacher<span class="token punctuation">.</span><span class="token function">teach</span><span class="token punctuation">(</span>student<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<ul>
+<li>同样现在有Teacher与Student对象，现提供一个获取某Teacher对象中的Student对象的名字。注意，需要考虑空指针的情况。如果为空，则返回<code>name</code>为默认名字。</li>
+</ul>
+<pre><code class="prism language-java"><span class="token class-name">Student</span> student <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Student</span><span class="token punctuation">(</span><span class="token string">"Vincent"</span><span class="token punctuation">,</span> <span class="token number">19</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">Teacher</span> teacher <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Teacher</span><span class="token punctuation">(</span>student<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"该教师下的学生名字为："</span> <span class="token operator">+</span> teacher<span class="token punctuation">.</span><span class="token function">getStudentName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+student <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+teacher<span class="token punctuation">.</span><span class="token function">setStudent</span><span class="token punctuation">(</span>student<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"该教师下的学生名字为："</span> <span class="token operator">+</span> teacher<span class="token punctuation">.</span><span class="token function">getStudentName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p><img src="https://img-blog.csdnimg.cn/b4e483a4c3bc44d4963d39368d5eea90.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5L2g57uI56GV55qEVmluY2VudA==,size_20,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述"></p>
+<h3><a id="Optional_624"></a>获取Optional容器中的对象</h3>
+<ol>
+<li><strong>T get() 如果调用的对象，包含值则返回，否则抛出异常。</strong></li>
+</ol>
+<pre><code class="prism language-java"><span class="token class-name">Student</span> student <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Student</span><span class="token punctuation">(</span><span class="token string">"vincent"</span><span class="token punctuation">,</span> <span class="token number">18</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">Optional</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Student</span><span class="token punctuation">&gt;</span></span> optionalStudent <span class="token operator">=</span> <span class="token class-name">Optional</span><span class="token punctuation">.</span><span class="token function">ofNullable</span><span class="token punctuation">(</span>student<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token class-name">Student</span> student1 <span class="token operator">=</span> optionalStudent<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>student1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<pre><code class="prism language-java"><span class="token class-name">Student</span> student <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Student</span><span class="token punctuation">(</span><span class="token string">"vincent"</span><span class="token punctuation">,</span> <span class="token number">18</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+student <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+<span class="token class-name">Optional</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Student</span><span class="token punctuation">&gt;</span></span> optionalStudent <span class="token operator">=</span> <span class="token class-name">Optional</span><span class="token punctuation">.</span><span class="token function">ofNullable</span><span class="token punctuation">(</span>student<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token class-name">Student</span> student1 <span class="token operator">=</span> optionalStudent<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>student1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p><img src="https://img-blog.csdnimg.cn/970c4f07b59c4dc4afe54ee99add0905.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5L2g57uI56GV55qEVmluY2VudA==,size_20,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述"></p>
+<ol start="2">
+<li>T orElse(T other) 如果有值则返回该对象，否则返回指定的other对象。</li>
+</ol>
+<pre><code class="prism language-java"><span class="token class-name">Student</span> initialStudent <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Student</span><span class="token punctuation">(</span><span class="token string">"初始名字"</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">Student</span> student <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+<span class="token class-name">Optional</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Student</span><span class="token punctuation">&gt;</span></span> optional <span class="token operator">=</span> <span class="token class-name">Optional</span><span class="token punctuation">.</span><span class="token function">ofNullable</span><span class="token punctuation">(</span>student<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token class-name">Student</span> student1 <span class="token operator">=</span> optional<span class="token punctuation">.</span><span class="token function">orElse</span><span class="token punctuation">(</span>initialStudent<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>student1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<ol start="3">
+<li>T orElseGet(Supplier&lt;? extends T&gt; other) 如果有值则返回该对象，否则返回由Supplier接口实现提供的对象。</li>
+</ol>
+<pre><code class="prism language-java"><span class="token class-name">Student</span> student <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+<span class="token class-name">Optional</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Student</span><span class="token punctuation">&gt;</span></span> optional <span class="token operator">=</span> <span class="token class-name">Optional</span><span class="token punctuation">.</span><span class="token function">ofNullable</span><span class="token punctuation">(</span>student<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">Student</span> student1 <span class="token operator">=</span> optional<span class="token punctuation">.</span><span class="token function">orElseGet</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-&gt;</span> <span class="token keyword">new</span> <span class="token class-name">Student</span><span class="token punctuation">(</span><span class="token string">"初始名字"</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>student1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+</code></pre>
+<ol start="4">
+<li>T orElseThrow(Supplier&lt;? extends X&gt; exceptionSupplier): 如果有值则返回，否则抛出由Supplier接口实现提供的自定义异常。</li>
+</ol>
+<pre><code class="prism language-java"><span class="token class-name">Student</span> student <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+<span class="token class-name">Optional</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Student</span><span class="token punctuation">&gt;</span></span> optional <span class="token operator">=</span> <span class="token class-name">Optional</span><span class="token punctuation">.</span><span class="token function">ofNullable</span><span class="token punctuation">(</span>student<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">Student</span> student1 <span class="token operator">=</span> optional<span class="token punctuation">.</span><span class="token function">orElseThrow</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token class-name">Supplier</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Throwable</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-&gt;</span> <span class="token keyword">new</span> <span class="token class-name">RuntimeException</span><span class="token punctuation">(</span><span class="token string">"抱歉，当前对象是空的！"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p><img src="https://img-blog.csdnimg.cn/a7dc376700f14fa1a4ee49f74a4047b5.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5L2g57uI56GV55qEVmluY2VudA==,size_20,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述"></p>
+</div>
+</body>
+
+</html>

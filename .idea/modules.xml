@@ -2,12 +2,15 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/BasicBufferDemo/BasicBufferDemo.iml" filepath="$PROJECT_DIR$/BasicBufferDemo/BasicBufferDemo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/BasicChannelDemo/BasicChannelDemo.iml" filepath="$PROJECT_DIR$/BasicChannelDemo/BasicChannelDemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/ServerSocketTest01/ServerSocketTest01.iml" filepath="$PROJECT_DIR$/ServerSocketTest01/ServerSocketTest01.iml" />
       <module fileurl="file://$PROJECT_DIR$/ServerSocketTest02/ServerSocketTest02.iml" filepath="$PROJECT_DIR$/ServerSocketTest02/ServerSocketTest02.iml" />
       <module fileurl="file://$PROJECT_DIR$/ServerSocketTest03/ServerSocketTest03.iml" filepath="$PROJECT_DIR$/ServerSocketTest03/ServerSocketTest03.iml" />
       <module fileurl="file://$PROJECT_DIR$/ServerSocketTest04/ServerSocketTest04.iml" filepath="$PROJECT_DIR$/ServerSocketTest04/ServerSocketTest04.iml" />
       <module fileurl="file://$PROJECT_DIR$/ServerSocketTest05/ServerSocketTest05.iml" filepath="$PROJECT_DIR$/ServerSocketTest05/ServerSocketTest05.iml" />
       <module fileurl="file://$PROJECT_DIR$/TcpFileUpload/TcpFileUpload.iml" filepath="$PROJECT_DIR$/TcpFileUpload/TcpFileUpload.iml" />
+      <module fileurl="file://$PROJECT_DIR$/UdpFileDownload/UdpFileDownload.iml" filepath="$PROJECT_DIR$/UdpFileDownload/UdpFileDownload.iml" />
     </modules>
   </component>
 </project>
