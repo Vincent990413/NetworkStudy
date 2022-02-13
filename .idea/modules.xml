@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/BasicBufferDemo/BasicBufferDemo.iml" filepath="$PROJECT_DIR$/BasicBufferDemo/BasicBufferDemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/BasicChannelDemo/BasicChannelDemo.iml" filepath="$PROJECT_DIR$/BasicChannelDemo/BasicChannelDemo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/BasicNIOChatRoom/BasicNIOChatRoom.iml" filepath="$PROJECT_DIR$/BasicNIOChatRoom/BasicNIOChatRoom.iml" />
       <module fileurl="file://$PROJECT_DIR$/BasicNIODemo01/BasicNIODemo01.iml" filepath="$PROJECT_DIR$/BasicNIODemo01/BasicNIODemo01.iml" />
       <module fileurl="file://$PROJECT_DIR$/ServerSocketTest01/ServerSocketTest01.iml" filepath="$PROJECT_DIR$/ServerSocketTest01/ServerSocketTest01.iml" />
       <module fileurl="file://$PROJECT_DIR$/ServerSocketTest02/ServerSocketTest02.iml" filepath="$PROJECT_DIR$/ServerSocketTest02/ServerSocketTest02.iml" />
