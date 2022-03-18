@@ -10,9 +10,9 @@ import io.netty.util.concurrent.GlobalEventExecutor;
 import java.text.SimpleDateFormat;
 
 /**
- * 这个是服务端的入站处理器 当数据从客户端发送进入服务端的pipeline时
+ * 这个是服务端的入站处理器 当数据从客户端发送进入服务端的 Pipeline 时
  * <p>
- * 并且规定了数据的类型是String类型 重写channelRead0方法既可以实现
+ * 并且规定了数据的类型是String类型 重写channelRead0方法就可以实现
  */
 public class MyServerHandler extends SimpleChannelInboundHandler<String> {
 
@@ -96,7 +96,7 @@ public class MyServerHandler extends SimpleChannelInboundHandler<String> {
         channels.forEach(currentChannel -> {
             //如果是非自身Channel的通道 可以转发
             if (channel != currentChannel) {
-                currentChannel.writeAndFlush("[客户端]" + channel.remoteAddress() + "发送了消息" + msg + "\n");
+                currentChannel.writeAndFlush("[客户端]" + channel.remoteAddress() + "发送了消息：" + msg + "\n");
             } else {
                 //如果是自己 不用回显 没必要
             }

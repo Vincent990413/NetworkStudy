@@ -1,6 +1,7 @@
 package com.netty.groupchat;
 
 import com.netty.groupchat.handler.MyServerHandler;
+import com.netty.groupchat.handler.MyServerHeartBeatHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -8,24 +9,27 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
+import io.netty.handler.logging.LogLevel;
+import io.netty.handler.logging.LoggingHandler;
+import io.netty.handler.timeout.IdleStateHandler;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * 这是基于Netty的群聊系统中的服务端
  * <p>
- * 可以支持对各个客户端 上线、下线的监听
- * 以及消息的转发
+ * 并且在该服务端中 增加心跳检测机制
  */
-public class GroupChatServer {
+public class GroupChatServerHeartBeat {
     private int port;
 
-    public GroupChatServer(int port) {
+    private GroupChatServerHeartBeat(int port) {
         this.port = port;
     }
 
-    /**
-     * 处理客户端的请求
-     */
-    public void handleClientRequest() throws InterruptedException {
+
+    //处理客户端的请求
+    private void handleClientRequest() throws InterruptedException {
         EventLoopGroup bossGroup = new NioEventLoopGroup(1);
         EventLoopGroup workerGroup = new NioEventLoopGroup(); //默认是8个
 
@@ -33,19 +37,14 @@ public class GroupChatServer {
         try {
             bootstrap.group(bossGroup, workerGroup)
                     .channel(NioServerSocketChannel.class)
-                    .option(ChannelOption.SO_BACKLOG, 128)
-                    .childOption(ChannelOption.SO_KEEPALIVE, true)
+                    .handler(new LoggingHandler(LogLevel.INFO)) //设置服务端的处理器为LoggingHandler
                     .childHandler(new ChannelInitializer<SocketChannel>() {
                         protected void initChannel(SocketChannel ch) throws Exception {
                             //获取到pipeline 流水线
                             ChannelPipeline pipeline = ch.pipeline();
 
-                            //1. 向pipeline中添加解码器处理器
-                            pipeline.addLast("decoder", new StringDecoder());
-                            //2. 向pipeline中加入编码器
-                            pipeline.addLast("encoder", new StringEncoder());
-                            //3. 向pipeline中加入自己的自定义处理器
-                            pipeline.addLast(new MyServerHandler());
+                            pipeline.addLast(new IdleStateHandler(3, 5, 7, TimeUnit.SECONDS));
+                            pipeline.addLast(new MyServerHeartBeatHandler());
                         }
                     });
             ChannelFuture channelFuture = bootstrap.bind(port).sync();
@@ -59,6 +58,6 @@ public class GroupChatServer {
     }
 
     public static void main(String[] args) throws InterruptedException {
-        new GroupChatServer(7000).handleClientRequest();
+        new GroupChatServerHeartBeat(7000).handleClientRequest();
     }
 }
