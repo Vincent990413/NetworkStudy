@@ -2,17 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a8ac5254-53fa-4eb4-8279-69467dc2b6bd" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/NettyChat/src/main/java/com/netty/groupchat/GroupChatClient.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/NettyChat/src/main/java/com/netty/groupchat/GroupChatServerHeartBeat.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/NettyChat/src/main/java/com/netty/groupchat/handler/HeartBeatClient.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/NettyChat/src/main/java/com/netty/groupchat/handler/MyClientHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/NettyChat/src/main/java/com/netty/groupchat/handler/MyServerHeartBeatHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/NettyChat/src/main/java/com/netty/groupchat/websocket/MyWebSocketServer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/NettyChat/src/main/java/com/netty/groupchat/websocket/handler/MyTextWebSocketFrameHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/NettyChat/src/main/java/com/netty/groupchat/websocket/html/WebSocketHtml.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NettyChat/src/main/java/com/netty/groupchat/GroupChatServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/NettyChat/src/main/java/com/netty/groupchat/GroupChatServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NettyChat/src/main/java/com/netty/groupchat/handler/MyServerHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/NettyChat/src/main/java/com/netty/groupchat/handler/MyServerHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NettyChat/target/classes/com/netty/groupchat/GroupChatServer$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/NettyChat/target/classes/com/netty/groupchat/GroupChatServer$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NettyChat/target/classes/com/netty/groupchat/GroupChatServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/NettyChat/target/classes/com/netty/groupchat/GroupChatServer.class" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/NettyChat/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -26,53 +20,66 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/NettyChat/src/main/java/com/netty/groupchat/GroupChatServer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="478">
-              <caret line="46" column="54" selection-start-line="46" selection-start-column="54" selection-end-line="46" selection-end-column="54" />
+            <state relative-caret-position="836">
+              <caret line="38" column="31" selection-start-line="38" selection-start-column="31" selection-end-line="38" selection-end-column="31" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#1183#1858#0" expanded="true" />
-                <element signature="e#1857#1858#0" expanded="true" />
+                <element signature="e#572#573#0" expanded="true" />
+                <element signature="e#604#605#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/NettyChat/src/main/java/com/netty/groupchat/GroupChatServerHeartBeat.java">
+        <entry file="file://$PROJECT_DIR$/NettyChat/src/main/java/com/netty/groupchat/GroupChatClient.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="441">
-              <caret line="45" column="59" selection-start-line="45" selection-start-column="59" selection-end-line="45" selection-end-column="59" />
+            <state relative-caret-position="203">
+              <caret line="37" selection-start-line="37" selection-end-line="37" />
               <folding>
-                <element signature="e#1318#1736#0" expanded="true" />
-                <element signature="e#1735#1736#0" expanded="true" />
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/NettyChat/src/main/java/com/netty/groupchat/websocket/MyWebSocketServer.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1210">
+              <caret line="55" column="64" selection-start-line="55" selection-start-column="64" selection-end-line="55" selection-end-column="64" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#695#696#0" expanded="true" />
+                <element signature="e#727#728#0" expanded="true" />
+                <element signature="e#1281#2489#0" expanded="true" />
+                <element signature="e#2488#2489#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="jar://$MAVEN_REPOSITORY$/io/netty/netty-all/4.1.20.Final/netty-all-4.1.20.Final-sources.jar!/io/netty/handler/timeout/IdleStateHandler.java">
+        <entry file="file://$PROJECT_DIR$/NettyChat/src/main/java/com/netty/groupchat/websocket/handler/MyTextWebSocketFrameHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="232">
-              <caret line="74" column="64" lean-forward="true" selection-start-line="74" selection-start-column="64" selection-end-line="74" selection-end-column="64" />
+            <state relative-caret-position="1210">
+              <caret line="55" column="17" lean-forward="true" selection-start-line="55" selection-start-column="17" selection-end-line="55" selection-end-column="17" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="jar://$MAVEN_REPOSITORY$/io/netty/netty-all/4.1.20.Final/netty-all-4.1.20.Final-sources.jar!/io/netty/channel/ChannelDuplexHandler.java">
+        <entry file="file://$PROJECT_DIR$/NettyChat/src/main/java/com/netty/groupchat/websocket/html/WebSocketHtml.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="273">
-              <caret line="27" lean-forward="true" selection-start-line="27" selection-end-line="27" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="jar://$MAVEN_REPOSITORY$/io/netty/netty-all/4.1.20.Final/netty-all-4.1.20.Final-sources.jar!/io/netty/handler/timeout/ReadTimeoutHandler.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="273">
-              <caret line="33" column="37" selection-start-line="33" selection-start-column="37" selection-end-line="33" selection-end-column="37" />
+            <state relative-caret-position="990">
+              <caret line="45" column="29" selection-start-line="45" selection-start-column="29" selection-end-line="45" selection-end-column="29" />
+              <folding>
+                <element signature="n#style#0;n#textarea#0;n#form#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#textarea#1;n#form#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -80,8 +87,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/NettyChat/src/main/java/com/netty/groupchat/handler/MyServerHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-756">
-              <caret line="15" column="3" lean-forward="true" selection-start-line="15" selection-start-column="3" selection-end-line="15" selection-end-column="3" />
+            <state relative-caret-position="154">
+              <caret line="14" column="24" selection-start-line="14" selection-start-column="24" selection-end-line="14" selection-end-column="24" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -90,47 +97,40 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/NettyChat/src/main/java/com/netty/groupchat/handler/MyServerHeartBeatHandler.java">
+        <entry file="file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/lib.dom.d.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="672">
-              <caret line="53" column="5" lean-forward="true" selection-start-line="53" selection-start-column="5" selection-end-line="53" selection-end-column="5" />
+            <state relative-caret-position="355102">
+              <caret line="16154" column="17" selection-start-line="16154" selection-start-column="13" selection-end-line="16154" selection-end-column="17" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="jar://$MAVEN_REPOSITORY$/io/netty/netty-all/4.1.20.Final/netty-all-4.1.20.Final-sources.jar!/io/netty/handler/codec/http/websocketx/TextWebSocketFrame.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2200">
+              <caret line="130" column="22" selection-start-line="130" selection-start-column="22" selection-end-line="130" selection-end-column="22" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="jar://$MAVEN_REPOSITORY$/io/netty/netty-all/4.1.20.Final/netty-all-4.1.20.Final-sources.jar!/io/netty/handler/stream/ChunkedWriteHandler.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="242">
+              <caret line="42" column="48" selection-start-line="42" selection-start-column="48" selection-end-line="42" selection-end-column="48" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/BasicNIOChatRoom/src/com/vincent/client/NIOChatRoomClient.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1166">
+              <caret line="60" column="47" selection-start-line="60" selection-start-column="39" selection-end-line="60" selection-end-column="47" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/NettyChat/src/main/java/com/netty/groupchat/handler/HeartBeatClient.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="273">
-              <caret line="13" column="47" lean-forward="true" selection-start-line="13" selection-start-column="47" selection-end-line="13" selection-end-column="47" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="jar://D:/Program Files/Java/jdk1.8.0_181/src.zip!/java/util/concurrent/atomic/AtomicInteger.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2406">
-              <caret line="184" column="36" selection-start-line="184" selection-start-column="21" selection-end-line="184" selection-end-column="36" />
-              <folding>
-                <element signature="e#4725#4726#0" expanded="true" />
-                <element signature="e#4793#4794#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="jar://D:/Program Files/Java/jdk1.8.0_181/jre/lib/rt.jar!/sun/misc/Unsafe.class">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="293">
-              <caret line="361" column="27" lean-forward="true" selection-start-line="361" selection-start-column="27" selection-end-line="361" selection-end-column="27" />
             </state>
           </provider>
         </entry>
@@ -141,6 +141,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -206,6 +207,9 @@
         <option value="$PROJECT_DIR$/NettyChat/src/main/java/com/netty/groupchat/handler/MyServerHeartBeatHandler.java" />
         <option value="$PROJECT_DIR$/NettyChat/src/main/java/com/netty/groupchat/handler/MyClientHeartBeatHandler.java" />
         <option value="$PROJECT_DIR$/NettyChat/src/main/java/com/netty/groupchat/handler/HeartBeatClient.java" />
+        <option value="$PROJECT_DIR$/NettyChat/src/main/java/com/netty/groupchat/websocket/handler/MyTextWebSocketFrameHandler.java" />
+        <option value="$PROJECT_DIR$/NettyChat/src/main/java/com/netty/groupchat/websocket/MyWebSocketServer.java" />
+        <option value="$PROJECT_DIR$/NettyChat/src/main/java/com/netty/groupchat/websocket/html/WebSocketHtml.html" />
       </list>
     </option>
   </component>
@@ -265,7 +269,27 @@
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="groupchat" type="462c0819:PsiDirectoryNode" />
+              <item name="websocket" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="networkdemo" type="b2602c69:ProjectViewProjectNode" />
+              <item name="NettyChat" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="groupchat" type="462c0819:PsiDirectoryNode" />
+              <item name="websocket" type="462c0819:PsiDirectoryNode" />
               <item name="handler" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="networkdemo" type="b2602c69:ProjectViewProjectNode" />
+              <item name="NettyChat" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="groupchat" type="462c0819:PsiDirectoryNode" />
+              <item name="websocket" type="462c0819:PsiDirectoryNode" />
+              <item name="html" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -274,9 +298,10 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1647564502403" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1647565232927" />
     <property name="jdk.selected.JAVA_MODULE" value="1.8.0_181" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/NettyChat/src/main/java/com/netty" />
     <property name="last_opened_file_path" value="F:/研究生渠道项目组资料/项目源代码/Scchannel-external-service" />
@@ -400,8 +425,8 @@
       <item itemvalue="Application.GroupChatServer" />
       <item itemvalue="Application.NIOChatRoomClient" />
       <item itemvalue="Application.NIOChatRoomServer" />
-      <item itemvalue="Tomcat Server.Tomcat 9.0.37" />
       <item itemvalue="Application.GroupChatServerHeartBeat" />
+      <item itemvalue="Tomcat Server.Tomcat 9.0.37" />
     </list>
     <recent_temporary>
       <list>
@@ -443,10 +468,10 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="98389000" />
+    <option name="totallyTimeSpent" value="98666000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="17" width="1550" height="786" extended-state="6" />
+    <frame x="1913" y="-7" width="1550" height="878" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49810368" weight="0.19839142" />
@@ -486,40 +511,6 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/ServerSocketTest04/src/vincent/client/OutputClient.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="44" column="21" lean-forward="true" selection-start-line="44" selection-start-column="21" selection-end-line="44" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TcpFileUpload/src/vincent/client/FileUploadClient.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="352">
-          <caret line="33" column="50" lean-forward="true" selection-start-line="33" selection-start-column="50" selection-end-line="33" selection-end-column="50" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TcpFileUpload/src/vincent/server/FileUploadServer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="45" column="17" lean-forward="true" selection-start-line="45" selection-start-column="17" selection-end-line="45" selection-end-column="17" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/UdpFileDownload/src/vincent/UdpFileDownload.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="83">
-          <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/BasicBufferDemo/src/com/vincent/MappedByteBuffer.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="168">
@@ -617,7 +608,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/BasicNIOChatRoom/src/com/vincent/client/NIOChatRoomClient.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1113">
+        <state relative-caret-position="1166">
           <caret line="60" column="47" selection-start-line="60" selection-start-column="39" selection-end-line="60" selection-end-column="47" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -757,18 +748,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/NettyChat/src/main/java/com/netty/groupchat/GroupChatClient.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="44" column="57" lean-forward="true" selection-start-line="44" selection-start-column="57" selection-end-line="44" selection-end-column="57" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#958#1667#0" expanded="true" />
-            <element signature="e#1666#1667#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/io/netty/netty-all/4.1.20.Final/netty-all-4.1.20.Final-sources.jar!/io/netty/channel/ChannelInitializer.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="251">
@@ -793,24 +772,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://D:/Program Files/Java/jdk1.8.0_181/src.zip!/java/util/concurrent/atomic/AtomicInteger.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2406">
-          <caret line="184" column="36" selection-start-line="184" selection-start-column="21" selection-end-line="184" selection-end-column="36" />
-          <folding>
-            <element signature="e#4725#4726#0" expanded="true" />
-            <element signature="e#4793#4794#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://D:/Program Files/Java/jdk1.8.0_181/jre/lib/rt.jar!/sun/misc/Unsafe.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="293">
-          <caret line="361" column="27" lean-forward="true" selection-start-line="361" selection-start-column="27" selection-end-line="361" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="jar://D:/Program Files/Java/jdk1.8.0_181/src.zip!/java/util/concurrent/atomic/AtomicInteger.java" />
+    <entry file="jar://D:/Program Files/Java/jdk1.8.0_181/jre/lib/rt.jar!/sun/misc/Unsafe.class" />
     <entry file="file://$PROJECT_DIR$/NettyChat/src/main/java/com/netty/groupchat/handler/HeartBeatClient.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="273">
@@ -833,8 +796,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/NettyChat/src/main/java/com/netty/groupchat/handler/MyServerHandler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-756">
-          <caret line="15" column="3" lean-forward="true" selection-start-line="15" selection-start-column="3" selection-end-line="15" selection-end-column="3" />
+        <state relative-caret-position="154">
+          <caret line="14" column="24" selection-start-line="14" selection-start-column="24" selection-end-line="14" selection-end-column="24" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -843,12 +806,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/NettyChat/src/main/java/com/netty/groupchat/GroupChatServer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="478">
-          <caret line="46" column="54" selection-start-line="46" selection-start-column="54" selection-end-line="46" selection-end-column="54" />
+        <state relative-caret-position="836">
+          <caret line="38" column="31" selection-start-line="38" selection-start-column="31" selection-end-line="38" selection-end-column="31" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1183#1858#0" expanded="true" />
-            <element signature="e#1857#1858#0" expanded="true" />
+            <element signature="e#572#573#0" expanded="true" />
+            <element signature="e#604#605#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -882,6 +845,62 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="232">
           <caret line="74" column="64" lean-forward="true" selection-start-line="74" selection-start-column="64" selection-end-line="74" selection-end-column="64" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/NettyChat/src/main/java/com/netty/groupchat/GroupChatClient.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="203">
+          <caret line="37" selection-start-line="37" selection-end-line="37" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/io/netty/netty-all/4.1.20.Final/netty-all-4.1.20.Final-sources.jar!/io/netty/handler/codec/http/websocketx/WebSocketServerProtocolHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1518">
+          <caret line="106" column="11" selection-start-line="106" selection-start-column="11" selection-end-line="106" selection-end-column="11" />
+          <folding>
+            <element signature="e#4300#4301#0" expanded="true" />
+            <element signature="e#4348#4349#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/NettyChat/src/main/java/com/netty/groupchat/websocket/MyWebSocketServer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1210">
+          <caret line="55" column="64" selection-start-line="55" selection-start-column="64" selection-end-line="55" selection-end-column="64" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#695#696#0" expanded="true" />
+            <element signature="e#727#728#0" expanded="true" />
+            <element signature="e#1281#2489#0" expanded="true" />
+            <element signature="e#2488#2489#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/NettyChat/src/main/java/com/netty/groupchat/websocket/html/WebSocketHtml.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="990">
+          <caret line="45" column="29" selection-start-line="45" selection-start-column="29" selection-end-line="45" selection-end-column="29" />
+          <folding>
+            <element signature="n#style#0;n#textarea#0;n#form#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#textarea#1;n#form#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/NettyChat/src/main/java/com/netty/groupchat/websocket/handler/MyTextWebSocketFrameHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1210">
+          <caret line="55" column="17" lean-forward="true" selection-start-line="55" selection-start-column="17" selection-end-line="55" selection-end-column="17" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
