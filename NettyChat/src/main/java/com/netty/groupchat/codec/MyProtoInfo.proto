@@ -1,0 +1,38 @@
+syntax = "proto3"; //指定 protobuf 的版本
+option optimize_for = SPEED;
+option java_package = "com.netty.groupchat.codec.pojo"
+option java_outer_classname = "MyProtoInfo"; // Java 的外部类名
+
+
+//使用 message 来管理其他的message
+message MyMessage {
+
+    //如果 DataType 为0 代表是Student对象...
+    enum DataType {
+        StudentType = 0; //在proto3 要求 enum 的编号从0开始
+        WorkerType = 1;
+    }
+
+    //用 data_type属性 来标识传输的是哪一个枚举类型 是序号，不是值！
+    DataType data_type = 1;
+
+    //为了节省空间 每次枚举类型最多只能出现其中的一个
+    oneof dataBody {
+        Student student = 2;    //是序号
+        Worker worker = 3;
+    }
+
+}
+
+message Student {
+    int32 id = 1;
+    string name = 2;
+}
+
+message Worker {
+    string name = 1;
+    int32 age = 2;
+}
+
+
+
