@@ -5,6 +5,8 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.group.ChannelGroup;
 import io.netty.channel.group.DefaultChannelGroup;
+import io.netty.util.concurrent.DefaultEventExecutorGroup;
+import io.netty.util.concurrent.EventExecutorGroup;
 import io.netty.util.concurrent.GlobalEventExecutor;
 
 import java.text.SimpleDateFormat;
@@ -23,6 +25,7 @@ public class MyServerHandler extends SimpleChannelInboundHandler<String> {
     //记录关于时间的操作
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
+
     /**
      * 一旦连接 则第一个执行这个方法 我们需要在上线（连接成功）同时 立即加入到所维护的channels中
      *
@@ -31,6 +34,8 @@ public class MyServerHandler extends SimpleChannelInboundHandler<String> {
      */
     @Override
     public void handlerAdded(ChannelHandlerContext ctx) throws Exception {
+        System.out.println("线程信息为：" + Thread.currentThread().getName());
+
         Channel channel = ctx.channel();
         //将该客户加入系统的信息 推送给其他在线的客户端
 

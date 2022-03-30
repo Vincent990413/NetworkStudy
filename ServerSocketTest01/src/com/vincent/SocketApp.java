@@ -60,9 +60,7 @@ public class SocketApp {
             //创建一个线程池 来负责线程的复用 如果先前有可用的线程则复用
             //否则创建新的 这里只需要关注 Runnable 实例
             ExecutorService newCachedThreadPool = Executors.newCachedThreadPool();
-            newCachedThreadPool.execute(() -> {
-                handlerCommunication(currentSocket);
-            });
+            newCachedThreadPool.execute(() -> handlerCommunication(currentSocket));
         } catch (IOException e) {
             e.printStackTrace();
         }
